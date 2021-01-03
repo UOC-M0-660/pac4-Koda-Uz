@@ -97,11 +97,34 @@ conocimientos extensos sobre progamación reactiva. No es recomendada para desar
 
 ### Testing
 
+La pirámide de test de google divide los test en tres tipos, UI tests, Integration Tests y Unit
+test. Los ordena en una pirámide siendo Unit tests la base y UI tests la cima.
+
+Esto es así ya que se recomienda que el 70% de los test sean Unit tests, el 20% Integration tests
+y el 10% UI Tests
+
 #### ¿Qué tipo de tests se deberían incluir en cada parte de la pirámide de test? Pon ejemplos de librerías de testing para cada una de las partes. 
-Escribe aquí tu respuesta
+En la parte de unit tests deberían incluirse aquellos que pueden ejecutarse sin un emulador o
+dispositivo físico, cada test debería centrarse en un único componente y ejecutarse rápidamente.
+Las herramientas más usadas para estos test son JUnit y Mockito.
+
+En la parte de integration tests se incluyen las pruebas para comprbar como interactúa nuestro
+código con otras partes del Android Framework, se suelen ejecutar después de haber completado los
+unit tests.
+Una de las herramientas más populares para estos tests es Roboelectric, que ejecuta los test
+dentro de un sandbox sin necesidad de un emulador o dispositivo.
+
+En la parte de UI tests se incluyen las pruebas que emulan el comportamiento de un usuario y
+muestran los resultados por pantalla, estos son muy lentos y requieren de un emulador o dispositivo.
+Las herramientas más usadas para estos test son Espresso y UIAutomator.
 
 #### ¿Por qué los desarrolladores deben centrarse sobre todo en los Unido Tests?
-Escribe aquí tu respuesta
+se deben centrar en estos test porque son mucho más rápidos de ejecutar y no requieren las librerías
+de testing de Android, ya que se está probando código Java o Kotlin que no necesita el Framework
+de Android para compilar.
+
+Estos test son los cimientos de todo el proceso de testing en la app y dividen el código en pequeñas
+unidades, verificando cada una de ellas podemos estár muy seguros de que funcionarán todas juntas.
 
 ---
 
