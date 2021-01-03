@@ -131,7 +131,26 @@ unidades, verificando cada una de ellas podemos estár muy seguros de que funcio
 ### Inyección de dependencias
 
 #### Explica en qué consiste y por qué nos ayuda a mejorar nuestro código.
-Escribe aquí tu respuesta
+Se dice que una clase posee dependencias cuando necesita del uso de objetos de otra clase para
+realizar sus funciones.
+
+Como norma general no conviene que la clase tenga la responsabilidad de crear y usar otros objetos
+ya que va en contra de los principios SOLID de la programación orientada a objetos.
+
+La inyección de dependencias nos ayuda a cumplir con los principios:
+- Principio de responsabilidad única: La noción de que un objeto solo debería tener una
+responsabilidad
+_ Principio de la inversión de dependencia: La noción de que se debe depender de abstracciones y no
+depender de implementaciones
+
+Nos ayuda a mejorar el código ya que utilizando inyección de depandencias podemos testear más
+facilmente nuestro código, reemplazando las dependencias por objetos mock por ejemplo.
+De esta manera al testear una clase solo comprobamos su funcionalidad y no la suya sumada a la de
+sus dependencias, así podemos testear cada clase por separado.
 
 #### Explica cómo se hace para aplicar inyección de dependencias de forma manual a un proyecto (sin utilizar librerías externas).
-Escribe aquí tu respuesta
+La forma tradicional de realizar inyección de dependencias es mediante el paso de parámetros en el
+constructor. Pasando como parámetros al constructor las dependencias necesarias.
+
+Para las aplicaciones modernas se utilizan frameworks de inyección de dependencias ya que este
+método aumenta la complejidad del código y el código "boilerplate".
