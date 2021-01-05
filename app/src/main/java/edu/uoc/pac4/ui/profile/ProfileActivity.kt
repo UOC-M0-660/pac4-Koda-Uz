@@ -94,7 +94,7 @@ class ProfileActivity : AppCompatActivity() {
                     .into(imageView)
         }
         // Views
-        viewsText.text = getString(R.string.views_text, user.viewCount)
+        viewsText.text = resources.getQuantityString(R.plurals.views_text, user.viewCount, user.viewCount)
     }
 
     private fun logout() {

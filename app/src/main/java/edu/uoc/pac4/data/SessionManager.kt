@@ -6,6 +6,7 @@ import android.content.Context
  * Created by alex on 06/09/2020.
  */
 
+@Deprecated("Replaced with LocalDataSource")
 class SessionManager(context: Context) {
 
     private val sharedPreferencesName = "sessionPreferences"

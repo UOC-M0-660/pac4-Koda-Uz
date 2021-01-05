@@ -154,3 +154,33 @@ constructor. Pasando como parámetros al constructor las dependencias necesarias
 
 Para las aplicaciones modernas se utilizan frameworks de inyección de dependencias ya que este
 método aumenta la complejidad del código y el código "boilerplate".
+
+---
+
+### Ejercicio 6
+
+### Ejecuta Lint al proyecto y revisa qué errores y warnings te aparecen. Haz una lista con 5 de
+ellos y explica de qué problema te avisan y cómo corregirlos.
+
+Lint me muestra un total de 22 warnings, he seleccionado 5 de ellos:
+
+- Accessibility - Image without content description: Las ImageViews e ImageButtons deben poseer una
+descripción del contenido para que los "screen readers" y otras herramientas de accesibiliad puedan
+describir la interfaz de manera adecuada. Se soluciona incluyendo el atributo
+"android:contentDescription".
+
+- Correctness - Obsolete Gradle Dependency: Indica que una de las librerías que incluye el proyecto
+no está actualizada a la versión más reciente. Se soluciona indicando en el fichero build.gradle
+la versión más reciente de todas las librerías que necesitemos
+
+- Performance - Node can be replaced by a TextView with compound drawable: Nos advierte de que las
+LinearLayout que solo poseen una ImageView y una TextView se pueden optimizar reemplazando estas
+por una única TextView e incluyendo la imagen como "compound drawable". Se soluciona haciendo este
+cambio.
+
+- Performance - Unused resources: Nos advierte de recursos sin usar en colors.xml, strings.xml, etc.
+Se soluciona eliminando los recursos sobrantes.
+
+- Security - Using setJavaScriptEnabled: Nos advierte de que nuestro código no debe usar esta opción
+si no estamos seguros de que nuestra aplicación realmente lo requiera. Se soluciona eliminando esta
+opción si no es necesaria.

@@ -24,7 +24,8 @@ class TwitchApiService(private val httpClient: HttpClient) {
     suspend fun getTokens(authorizationCode: String): OAuthTokensResponse? {
         // Get Tokens from Twitch
         try {
-            val response = httpClient
+
+            return httpClient
                 .post<OAuthTokensResponse>(Endpoints.tokenUrl) {
                     parameter("client_id", OAuthConstants.clientID)
                     parameter("client_secret", OAuthConstants.clientSecret)
@@ -32,8 +33,6 @@ class TwitchApiService(private val httpClient: HttpClient) {
                     parameter("grant_type", "authorization_code")
                     parameter("redirect_uri", OAuthConstants.redirectUri)
                 }
-
-            return response
 
         } catch (t: Throwable) {
             Log.w(TAG, "Error Getting Access token", t)
@@ -45,11 +44,10 @@ class TwitchApiService(private val httpClient: HttpClient) {
     @Throws(UnauthorizedException::class)
     suspend fun getStreams(cursor: String? = null): StreamsResponse? {
         try {
-            val response = httpClient
+            return httpClient
                 .get<StreamsResponse>(Endpoints.streamsUrl) {
                     cursor?.let { parameter("after", it) }
                 }
-            return response
         } catch (t: Throwable) {
             Log.w(TAG, "Error getting streams", t)
             // Try to handle error

@@ -16,7 +16,8 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/stream_item_image_height"
-            tools:src="@color/black" />
+            tools:src="@color/black"
+            android:contentDescription="@string/stream_thumbnail_image" />
 
         <LinearLayout
             android:id="@+id/viewsContainer"
@@ -29,7 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_small"
-                android:src="@drawable/ic_eye"/>
+                android:src="@drawable/ic_eye"
+                android:contentDescription="@string/views_icon" />
             <TextView
                 android:id="@+id/viewsText"
                 android:layout_width="wrap_content"
