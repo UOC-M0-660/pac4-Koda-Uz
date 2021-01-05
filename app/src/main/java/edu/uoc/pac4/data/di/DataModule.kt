@@ -3,7 +3,7 @@ package edu.uoc.pac4.data.di
 import android.content.Context
 import android.content.SharedPreferences
 import edu.uoc.pac4.data.sources.LocalDataSource
-import edu.uoc.pac4.data.TwitchDataSource
+import edu.uoc.pac4.data.sources.TwitchDataSource
 import edu.uoc.pac4.data.network.Network
 import edu.uoc.pac4.data.oauth.AuthenticationRepository
 import edu.uoc.pac4.data.oauth.OAuthAuthenticationRepository

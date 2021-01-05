@@ -10,29 +10,57 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import edu.uoc.pac4.R
 import edu.uoc.pac4.data.network.Endpoints
-import edu.uoc.pac4.data.oauth.AuthenticationRepository
 import edu.uoc.pac4.data.oauth.OAuthConstants
 import edu.uoc.pac4.ui.LaunchActivity
 import kotlinx.android.synthetic.main.activity_oauth.*
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class OAuthActivity : AppCompatActivity() {
 
     private val TAG = "StreamsActivity"
 
-    private val authenticationRepository: AuthenticationRepository by inject()
+    private val oAuthViewModel: OAuthViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_oauth)
         launchOAuthAuthorization()
+
+        // Observe ViewModel Values
+        // Login result
+        oAuthViewModel.loginResult.observe(this, { loginResult ->
+            // Check Login Result
+            if (loginResult) {
+                // Success :)
+
+                Log.d(TAG, "Got Access token")
+            }
+            else {
+                // Failure :(
+
+                // Show Error Message
+                Toast.makeText(
+                        this@OAuthActivity,
+                        getString(R.string.error_oauth),
+                        Toast.LENGTH_LONG
+                ).show()
+                // Restart Activity
+                finish()
+                startActivity(Intent(this@OAuthActivity, OAuthActivity::class.java))
+            }
+
+            // Hide Loading Indicator
+            progressBar.visibility = View.GONE
+
+            // Restart app to navigate to StreamsActivity
+            startActivity(Intent(this@OAuthActivity, LaunchActivity::class.java))
+            finish()
+        })
     }
 
-    fun buildOAuthUri(): Uri {
+    private fun buildOAuthUri(): Uri {
         return Uri.parse(Endpoints.authorizationUrl)
             .buildUpon()
             .appendQueryParameter("client_id", OAuthConstants.clientID)
@@ -93,36 +121,7 @@ class OAuthActivity : AppCompatActivity() {
         // Show Loading Indicator
         progressBar.visibility = View.VISIBLE
 
-        // Launch new thread attached to this Activity.
-        // If the Activity is closed, this Thread will be cancelled
-        lifecycleScope.launch {
-
-            // Launch get Tokens Request
-            if (authenticationRepository.login(authorizationCode)) {
-                // Success :)
-
-                Log.d(TAG, "Got Access token")
-            }
-            else {
-                // Failure :(
-
-                // Show Error Message
-                Toast.makeText(
-                        this@OAuthActivity,
-                        getString(R.string.error_oauth),
-                        Toast.LENGTH_LONG
-                ).show()
-                // Restart Activity
-                finish()
-                startActivity(Intent(this@OAuthActivity, OAuthActivity::class.java))
-            }
-
-            // Hide Loading Indicator
-            progressBar.visibility = View.GONE
-
-            // Restart app to navigate to StreamsActivity
-            startActivity(Intent(this@OAuthActivity, LaunchActivity::class.java))
-            finish()
-        }
+        // Check user login
+        oAuthViewModel.login(authorizationCode)
     }
 }

@@ -1,7 +1,7 @@
 package edu.uoc.pac4.data.oauth
 
 import edu.uoc.pac4.data.sources.LocalDataSource
-import edu.uoc.pac4.data.TwitchDataSource
+import edu.uoc.pac4.data.sources.TwitchDataSource
 
 /**
  * Created by alex on 11/21/20.
