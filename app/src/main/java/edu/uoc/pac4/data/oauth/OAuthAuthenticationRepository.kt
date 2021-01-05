@@ -1,6 +1,6 @@
 package edu.uoc.pac4.data.oauth
 
-import edu.uoc.pac4.data.SessionManagerDataSource
+import edu.uoc.pac4.data.sources.LocalDataSource
 import edu.uoc.pac4.data.TwitchDataSource
 
 /**
@@ -8,20 +8,20 @@ import edu.uoc.pac4.data.TwitchDataSource
  */
 class OAuthAuthenticationRepository(
         private val twitchDataSource: TwitchDataSource,
-        private val sessionManagerDataSource: SessionManagerDataSource
+        private val localDataSource: LocalDataSource
 ) : AuthenticationRepository {
 
     override suspend fun isUserAvailable(): Boolean {
-        return sessionManagerDataSource.isUserAvailable()
+        return localDataSource.isUserAvailable()
     }
 
     override suspend fun login(authorizationCode: String): Boolean {
         twitchDataSource.getTokens(authorizationCode)?.let { response ->
             // Success :)
 
-            sessionManagerDataSource.saveAccessToken(response.accessToken)
+            localDataSource.saveAccessToken(response.accessToken)
             response.refreshToken?.let {
-                sessionManagerDataSource.saveRefreshToken(it)
+                localDataSource.saveRefreshToken(it)
             }
             return true
         } ?: run {
@@ -32,7 +32,7 @@ class OAuthAuthenticationRepository(
     }
 
     override suspend fun logout() {
-        sessionManagerDataSource.clearAccessToken()
-        sessionManagerDataSource.clearRefreshToken()
+        localDataSource.clearAccessToken()
+        localDataSource.clearRefreshToken()
     }
 }

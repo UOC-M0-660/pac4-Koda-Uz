@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.uoc.pac4.R
-import edu.uoc.pac4.data.SessionManager
 import edu.uoc.pac4.data.network.UnauthorizedException
+import edu.uoc.pac4.data.oauth.AuthenticationRepository
 import edu.uoc.pac4.data.streams.StreamsRepository
 import edu.uoc.pac4.ui.login.LoginActivity
 import edu.uoc.pac4.ui.profile.ProfileActivity
@@ -27,6 +27,7 @@ class StreamsActivity : AppCompatActivity() {
     private val layoutManager = LinearLayoutManager(this)
 
     private val streamsRepository: StreamsRepository by inject()
+    private val authenticationRepository: AuthenticationRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,7 +108,7 @@ class StreamsActivity : AppCompatActivity() {
             } catch (t: UnauthorizedException) {
                 Log.w(TAG, "Unauthorized Error getting streams", t)
                 // Clear local access token
-                SessionManager(this@StreamsActivity).clearAccessToken()
+                lifecycleScope.launch { authenticationRepository.logout() }
                 // User was logged out, close screen and open login
                 finish()
                 startActivity(Intent(this@StreamsActivity, LoginActivity::class.java))

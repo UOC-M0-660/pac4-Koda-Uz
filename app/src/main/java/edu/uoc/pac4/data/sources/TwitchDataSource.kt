@@ -1,4 +1,4 @@
-package edu.uoc.pac4.data
+package edu.uoc.pac4.data.sources
 
 import android.util.Log
 import edu.uoc.pac4.data.network.Endpoints

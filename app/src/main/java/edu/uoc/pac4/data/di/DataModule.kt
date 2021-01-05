@@ -2,7 +2,7 @@ package edu.uoc.pac4.data.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import edu.uoc.pac4.data.SessionManagerDataSource
+import edu.uoc.pac4.data.sources.LocalDataSource
 import edu.uoc.pac4.data.TwitchDataSource
 import edu.uoc.pac4.data.network.Network
 import edu.uoc.pac4.data.oauth.AuthenticationRepository
@@ -27,11 +27,11 @@ val dataModule = module {
     }
 
     // HttpClient
-    single { Network.createHttpClient(androidContext()) }
+    single { Network.createHttpClient(get()) }
 
     // DataSources
     single { TwitchDataSource(get()) }
-    single { SessionManagerDataSource(get()) }
+    single { LocalDataSource(get()) }
 
     // Streams
     single<StreamsRepository> { TwitchStreamsRepository(get()) }

@@ -1,4 +1,4 @@
-package edu.uoc.pac4.data
+package edu.uoc.pac4.data.sources
 
 import android.content.SharedPreferences
 import org.koin.core.component.KoinApiExtension
@@ -6,7 +6,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 
-class SessionManagerDataSource (private val sharedPreferences: SharedPreferences) {
+class LocalDataSource (private val sharedPreferences: SharedPreferences) {
 
     private val accessTokenKey = "accessTokeKey"
     private val refreshTokenKey = "refreshTokenKey"
@@ -15,7 +15,7 @@ class SessionManagerDataSource (private val sharedPreferences: SharedPreferences
         return getAccessToken() != null
     }
 
-    private fun getAccessToken(): String? {
+    fun getAccessToken(): String? {
         return sharedPreferences.getString(accessTokenKey, null)
     }
 
