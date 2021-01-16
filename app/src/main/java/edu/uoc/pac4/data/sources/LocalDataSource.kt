@@ -1,17 +1,9 @@
-package edu.uoc.pac4.data
+package edu.uoc.pac4.data.sources
 
-import android.content.Context
+import android.content.SharedPreferences
 
-/**
- * Created by alex on 06/09/2020.
- */
 
-@Deprecated("Replaced with LocalDataSource")
-class SessionManager(context: Context) {
-
-    private val sharedPreferencesName = "sessionPreferences"
-    private val sharedPreferences =
-        context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+class LocalDataSource (private val sharedPreferences: SharedPreferences) {
 
     private val accessTokenKey = "accessTokeKey"
     private val refreshTokenKey = "refreshTokenKey"
@@ -51,5 +43,4 @@ class SessionManager(context: Context) {
         editor.remove(refreshTokenKey)
         editor.apply()
     }
-
 }

@@ -1,21 +1,38 @@
 package edu.uoc.pac4.data.oauth
 
+import edu.uoc.pac4.data.sources.LocalDataSource
+import edu.uoc.pac4.data.sources.TwitchDataSource
+
 /**
  * Created by alex on 11/21/20.
  */
 class OAuthAuthenticationRepository(
-    // TODO: Add any datasources you may need
+        private val twitchDataSource: TwitchDataSource,
+        private val localDataSource: LocalDataSource
 ) : AuthenticationRepository {
 
     override suspend fun isUserAvailable(): Boolean {
-        TODO("Not yet implemented")
+        return localDataSource.isUserAvailable()
     }
 
     override suspend fun login(authorizationCode: String): Boolean {
-        TODO("Not yet implemented")
+        twitchDataSource.getTokens(authorizationCode)?.let { response ->
+            // Success :)
+
+            localDataSource.saveAccessToken(response.accessToken)
+            response.refreshToken?.let {
+                localDataSource.saveRefreshToken(it)
+            }
+            return true
+        } ?: run {
+            // Failure :(
+
+            return false
+        }
     }
 
     override suspend fun logout() {
-        TODO("Not yet implemented")
+        localDataSource.clearAccessToken()
+        localDataSource.clearRefreshToken()
     }
 }
